@@ -1,0 +1,45 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #ffe4e1; /* Romantik pembe tonu */
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.container {
+    text-align: center;
+}
+
+h1 {
+    color: #d02020;
+    font-size: 3rem;
+    margin-bottom: 30px;
+}
+
+button {
+    padding: 15px 30px;
+    font-size: 1.2rem;
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    transition: 0.3s;
+}
+
+#yesBtn {
+    background-color: #4caf50;
+    color: white;
+    margin-right: 20px;
+}
+
+#yesBtn:hover {
+    transform: scale(1.1);
+    background-color: #45a049;
+}
+
+#noBtn {
+    background-color: #771610;
+    color: white;
+    position: absolute; /* Sıçrama efekti için şart */
+}

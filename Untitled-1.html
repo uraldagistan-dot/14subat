@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ekin Kılıç benle Valentine olacak mı ? 💖</title>
+    <link rel="icon" href="dilenci.png" type="image/png">
+    
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            background-color: #ffe6e6;
+            font-family: 'Poppins', sans-serif;
+            overflow: hidden;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
+            z-index: 10;
+            transition: all 0.3s ease;
+        }
+
+        h1 {
+            color: #ff4757;
+            font-size: 2rem;
+            margin-bottom: 10px;
+        }
+
+        p {
+            color: #555;
+            margin-bottom: 30px;
+            font-size: 1.1rem;
+        }
+
+        .gif-container {
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .gif-container img {
+            width: 150px;
+            border-radius: 10px;
+        }
+
+        /* Video stili */
+        .gif-container video {
+            width: 100%;
+            max-width: 300px;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        .btn-group {
+            position: relative;
+            height: 60px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+        }
+
+        button {
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: transform 0.2s;
+            outline: none;
+        }
+
+        #yesBtn {
+            padding: 15px 35px;
+            font-size: 1rem;
+            background-color: #2ed573;
+            color: white;
+            box-shadow: 0 4px 15px rgba(46, 213, 115, 0.4);
+        }
+
+        #yesBtn:hover {
+            transform: scale(1.05);
+            background-color: #26af61;
+        }
+
+        #noBtn {
+            padding: 6px 12px;
+            font-size: 0.8rem;
+            height: fit-content;
+            background-color: #ff4757;
+            color: white;
+            box-shadow: 0 4px 15px rgba(255, 71, 87, 0.4);
+        }
+
+        #successMessage {
+            display: none;
+            margin-top: 20px;
+            color: #ff4757;
+            font-weight: bold;
+            font-size: 1.5rem;
+            animation: fadeIn 1s;
+        }
+
+        .final-state-img {
+            width: 250px;
+            max-width: 100%;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .final-state-text {
+            color: red;
+            font-size: 3rem;
+            font-weight: 800;
+            margin-top: 20px;
+            text-transform: uppercase;
+            animation: shake 0.5s infinite;
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(20px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        @keyframes shake {
+            0% { transform: translate(1px, 1px) rotate(0deg); }
+            10% { transform: translate(-1px, -2px) rotate(-1deg); }
+            20% { transform: translate(-3px, 0px) rotate(1deg); }
+            30% { transform: translate(3px, 2px) rotate(0deg); }
+            40% { transform: translate(1px, -1px) rotate(1deg); }
+            50% { transform: translate(-1px, 2px) rotate(-1deg); }
+            60% { transform: translate(-3px, 1px) rotate(0deg); }
+            70% { transform: translate(3px, 1px) rotate(-1deg); }
+            80% { transform: translate(-1px, -1px) rotate(1deg); }
+            90% { transform: translate(1px, 2px) rotate(0deg); }
+            100% { transform: translate(1px, -2px) rotate(-1deg); }
+        }
+    </style>
+</head>
+<body>
+
+    <audio id="bgMusic" loop>
+        <source src="kimmilyoner.mp4" type="video/mp4">
+    </audio>
+
+    <div class="card">
+        <div class="gif-container">
+            <img src="kedicik.png" alt="Cute Hearts">
+        </div>
+        
+        <h1>Ekin Kılıç beni çok sevip 14 şubatta benimle olacak mııı</h1>
+        <p>Lütfen hayır deme :/ </p>
+
+        <div class="btn-group">
+            <button id="yesBtn">Evet! ❤️</button>
+            <button id="noBtn">Hayır 💔</button>
+        </div>
+
+        <div id="successMessage">HİHİHİİİİİİİİ</div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+
+    <script>
+        const noBtn = document.getElementById('noBtn');
+        const yesBtn = document.getElementById('yesBtn');
+        const successMessage = document.getElementById('successMessage');
+        const card = document.querySelector('.card');
+        const gifContainer = document.querySelector('.gif-container');
+        const bgMusic = document.getElementById('bgMusic');
+
+        // --- MÜZİK BAŞLATMA KODU ---
+        // Sayfada herhangi bir yere tıklayınca veya fareyi oynatınca müzik başlar
+        function startMusic() {
+            bgMusic.play().then(() => {
+                // Müzik başladıysa dinleyicileri kaldır (tekrar tekrar çalışmasın)
+                document.removeEventListener('click', startMusic);
+                document.removeEventListener('mousemove', startMusic);
+                document.removeEventListener('touchstart', startMusic);
+            }).catch(error => {
+                console.log("Otomatik oynatma henüz başlamadı.");
+            });
+        }
+
+        document.addEventListener('click', startMusic);
+        document.addEventListener('mousemove', startMusic);
+        document.addEventListener('touchstart', startMusic);
+        // ---------------------------
+
+        let noCount = 0;
+
+        function moveButton() {
+            noCount++;
+
+            if (noCount > 8) {
+                card.innerHTML = `
+                    <img src="yanucun.jpeg" alt="Ya Nüçün" class="final-state-img">
+                    <h1 class="final-state-text">YA NÜÇÜNNNNNN</h1>
+                `;
+                return;
+            }
+
+            const windowWidth = window.innerWidth;
+            const windowHeight = window.innerHeight;
+            const btnWidth = noBtn.offsetWidth;
+            const btnHeight = noBtn.offsetHeight;
+
+            const randomX = Math.random() * (windowWidth - btnWidth - 40) + 20;
+            const randomY = Math.random() * (windowHeight - btnHeight - 40) + 20;
+
+            noBtn.style.position = 'fixed';
+            noBtn.style.left = randomX + 'px';
+            noBtn.style.top = randomY + 'px';
+        }
+
+        noBtn.addEventListener('mouseover', moveButton);
+        noBtn.addEventListener('touchstart', (e) => {
+            e.preventDefault();
+            moveButton();
+        });
+
+        yesBtn.addEventListener('click', () => {
+            // Evet'e basılınca arka plan müziğini SUSTUR
+            bgMusic.pause();
+            bgMusic.currentTime = 0;
+
+            confetti({
+                particleCount: 150,
+                spread: 70,
+                origin: { y: 0.6 }
+            });
+
+            // Gifi VİDEO ile değiştir (pocipoci.mp4)
+            gifContainer.innerHTML = `
+                <video autoplay loop playsinline>
+                    <source src="pocipoci.mp4" type="video/mp4">
+                    Tarayıcınız videoyu desteklemiyor.
+                </video>
+            `;
+
+            successMessage.style.display = 'block';
+            noBtn.style.display = 'none';
+            yesBtn.innerText = "POCİ POCİ 😍";
+            document.querySelector('h1').innerText = "Ben aşkımcığımı her şeyden çoook severimmmm";
+            document.querySelector('p').style.display = 'none';
+        });
+
+    </script>
+</body>
+</html>
