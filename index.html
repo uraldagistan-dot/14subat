@@ -49,23 +49,25 @@
             display: flex;
             justify-content: center;
             margin-bottom: 20px;
-            position: relative; /* Video ve Resim üst üste binsin diye */
+            position: relative;
         }
 
-        .gif-container img {
+        /* Başlangıçtaki Kedi Resmi */
+        #mainImage {
             width: 150px;
             border-radius: 10px;
-            display: block; /* Başlangıçta görünür */
+            display: block;
         }
 
-        /* Video stili - Başlangıçta GİZLİ */
-        #finalVideo {
+        /* --- YENİ: Evet denince çıkacak fotoğrafın stili --- */
+        #finalImage {
             width: 100%;
-            max-width: 300px;
+            max-width: 300px; /* Video gibi biraz daha büyük dursun */
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
-            display: none; /* Gizli */
+            display: none; /* Başlangıçta gizli */
         }
+        /* -------------------------------------------------- */
 
         .btn-group {
             position: relative;
@@ -116,6 +118,7 @@
             animation: fadeIn 1s;
         }
 
+        /* Hayır denince çıkan video stili */
         .final-state-video {
             width: 250px;
             max-width: 100%;
@@ -162,10 +165,8 @@
         <div class="gif-container">
             <img id="mainImage" src="kedicik.png" alt="Cute Hearts">
             
-            <video id="finalVideo" loop playsinline preload="auto">
-                <source src="pocipoci.mp4" type="video/mp4">
-            </video>
-        </div>
+            <img id="finalImage" src="patrick.png" alt="Poci Poci">
+            </div>
         
         <h1>Ekin Kılıç beni çok sevip 14 şubatta benimle olacak mııı</h1>
         <p>Lütfen hayır deme :/ </p>
@@ -187,9 +188,10 @@
         const card = document.querySelector('.card');
         const bgMusic = document.getElementById('bgMusic');
         
-        // Yeni element seçimleri
+        // Element seçimleri
         const mainImage = document.getElementById('mainImage');
-        const finalVideo = document.getElementById('finalVideo');
+        // YENİ: Video yerine resmi seçiyoruz
+        const finalImage = document.getElementById('finalImage');
 
         // MÜZİK BAŞLATMA
         function startMusic() {
@@ -255,10 +257,10 @@
                 origin: { y: 0.6 }
             });
 
-            // GÖRSEL DEĞİŞİMİ (Yeni ve Hızlı Yöntem)
+            // --- GÖRSEL DEĞİŞİMİ (Video yerine Foto) ---
             mainImage.style.display = 'none'; // Kediyi gizle
-            finalVideo.style.display = 'block'; // Videoyu göster
-            finalVideo.play(); // Videoyu oynat
+            finalImage.style.display = 'block'; // Yeni fotoyu göster
+            // -----------------------------------------
 
             successMessage.style.display = 'block';
             noBtn.style.display = 'none';
