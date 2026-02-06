@@ -49,19 +49,22 @@
             display: flex;
             justify-content: center;
             margin-bottom: 20px;
+            position: relative; /* Video ve Resim üst üste binsin diye */
         }
 
         .gif-container img {
             width: 150px;
             border-radius: 10px;
+            display: block; /* Başlangıçta görünür */
         }
 
-        /* Video stili */
-        .gif-container video {
+        /* Video stili - Başlangıçta GİZLİ */
+        #finalVideo {
             width: 100%;
             max-width: 300px;
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+            display: none; /* Gizli */
         }
 
         .btn-group {
@@ -113,7 +116,7 @@
             animation: fadeIn 1s;
         }
 
-        .final-state-img {
+        .final-state-video {
             width: 250px;
             max-width: 100%;
             border-radius: 15px;
@@ -157,7 +160,11 @@
 
     <div class="card">
         <div class="gif-container">
-            <img src="kedicik.png" alt="Cute Hearts">
+            <img id="mainImage" src="kedicik.png" alt="Cute Hearts">
+            
+            <video id="finalVideo" loop playsinline preload="auto">
+                <source src="pocipoci.mp4" type="video/mp4">
+            </video>
         </div>
         
         <h1>Ekin Kılıç beni çok sevip 14 şubatta benimle olacak mııı</h1>
@@ -178,14 +185,15 @@
         const yesBtn = document.getElementById('yesBtn');
         const successMessage = document.getElementById('successMessage');
         const card = document.querySelector('.card');
-        const gifContainer = document.querySelector('.gif-container');
         const bgMusic = document.getElementById('bgMusic');
+        
+        // Yeni element seçimleri
+        const mainImage = document.getElementById('mainImage');
+        const finalVideo = document.getElementById('finalVideo');
 
-        // --- MÜZİK BAŞLATMA KODU ---
-        // Sayfada herhangi bir yere tıklayınca veya fareyi oynatınca müzik başlar
+        // MÜZİK BAŞLATMA
         function startMusic() {
             bgMusic.play().then(() => {
-                // Müzik başladıysa dinleyicileri kaldır (tekrar tekrar çalışmasın)
                 document.removeEventListener('click', startMusic);
                 document.removeEventListener('mousemove', startMusic);
                 document.removeEventListener('touchstart', startMusic);
@@ -193,11 +201,9 @@
                 console.log("Otomatik oynatma henüz başlamadı.");
             });
         }
-
         document.addEventListener('click', startMusic);
         document.addEventListener('mousemove', startMusic);
         document.addEventListener('touchstart', startMusic);
-        // ---------------------------
 
         let noCount = 0;
 
@@ -205,8 +211,15 @@
             noCount++;
 
             if (noCount > 8) {
+                bgMusic.pause();
+                bgMusic.currentTime = 0;
+
+                // Hayır videosu
                 card.innerHTML = `
-                    <img src="yanucun.jpeg" alt="Ya Nüçün" class="final-state-img">
+                    <video autoplay loop playsinline class="final-state-video">
+                        <source src="yanucun.mp4" type="video/mp4">
+                        Tarayıcınız videoyu desteklemiyor.
+                    </video>
                     <h1 class="final-state-text">YA NÜÇÜNNNNNN</h1>
                 `;
                 return;
@@ -232,7 +245,7 @@
         });
 
         yesBtn.addEventListener('click', () => {
-            // Evet'e basılınca arka plan müziğini SUSTUR
+            // Arka plan müziğini durdur
             bgMusic.pause();
             bgMusic.currentTime = 0;
 
@@ -242,13 +255,10 @@
                 origin: { y: 0.6 }
             });
 
-            // Gifi VİDEO ile değiştir (pocipoci.mp4)
-            gifContainer.innerHTML = `
-                <video autoplay loop playsinline>
-                    <source src="pocipoci.mp4" type="video/mp4">
-                    Tarayıcınız videoyu desteklemiyor.
-                </video>
-            `;
+            // GÖRSEL DEĞİŞİMİ (Yeni ve Hızlı Yöntem)
+            mainImage.style.display = 'none'; // Kediyi gizle
+            finalVideo.style.display = 'block'; // Videoyu göster
+            finalVideo.play(); // Videoyu oynat
 
             successMessage.style.display = 'block';
             noBtn.style.display = 'none';
