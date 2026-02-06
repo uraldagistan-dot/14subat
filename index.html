@@ -59,15 +59,14 @@
             display: block;
         }
 
-        /* --- YENİ: Evet denince çıkacak fotoğrafın stili --- */
+        /* Evet denince çıkacak fotoğrafın stili */
         #finalImage {
             width: 100%;
-            max-width: 300px; /* Video gibi biraz daha büyük dursun */
+            max-width: 300px;
             border-radius: 15px;
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
             display: none; /* Başlangıçta gizli */
         }
-        /* -------------------------------------------------- */
 
         .btn-group {
             position: relative;
@@ -118,8 +117,8 @@
             animation: fadeIn 1s;
         }
 
-        /* Hayır denince çıkan video stili */
-        .final-state-video {
+        /* Hayır denince çıkan FOTOĞRAF stili (Videodan çevrildi) */
+        .final-state-img {
             width: 250px;
             max-width: 100%;
             border-radius: 15px;
@@ -166,7 +165,7 @@
             <img id="mainImage" src="kedicik.png" alt="Cute Hearts">
             
             <img id="finalImage" src="patrick.png" alt="Poci Poci">
-            </div>
+        </div>
         
         <h1>Ekin Kılıç beni çok sevip 14 şubatta benimle olacak mııı</h1>
         <p>Lütfen hayır deme :/ </p>
@@ -190,7 +189,6 @@
         
         // Element seçimleri
         const mainImage = document.getElementById('mainImage');
-        // YENİ: Video yerine resmi seçiyoruz
         const finalImage = document.getElementById('finalImage');
 
         // MÜZİK BAŞLATMA
@@ -216,15 +214,14 @@
                 bgMusic.pause();
                 bgMusic.currentTime = 0;
 
-                // Hayır videosu
+                // --- DEĞİŞİKLİK BURADA ---
+                // Video yerine tekrar FOTOĞRAF (yanucun.jpeg) koyduk
                 card.innerHTML = `
-                    <video autoplay loop playsinline class="final-state-video">
-                        <source src="yanucun.mp4" type="video/mp4">
-                        Tarayıcınız videoyu desteklemiyor.
-                    </video>
+                    <img src="yanucun.jpeg" alt="Ya Nüçün" class="final-state-img">
                     <h1 class="final-state-text">YA NÜÇÜNNNNNN</h1>
                 `;
                 return;
+                // -------------------------
             }
 
             const windowWidth = window.innerWidth;
@@ -257,10 +254,9 @@
                 origin: { y: 0.6 }
             });
 
-            // --- GÖRSEL DEĞİŞİMİ (Video yerine Foto) ---
+            // GÖRSEL DEĞİŞİMİ
             mainImage.style.display = 'none'; // Kediyi gizle
-            finalImage.style.display = 'block'; // Yeni fotoyu göster
-            // -----------------------------------------
+            finalImage.style.display = 'block'; // Patrick'i göster
 
             successMessage.style.display = 'block';
             noBtn.style.display = 'none';
